@@ -10,9 +10,8 @@ import SwiftUI
 struct SettingsView: View {
     var body: some View {
         List {
-            Section("Appearance settings") {
-                AppearancePicker()
-            }
+            GeneralSection()
+            VersionSection()
         }
         .navigationTitle("Settings")
     }

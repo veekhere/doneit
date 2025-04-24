@@ -121,7 +121,8 @@ struct ActionRow: View {
             }
         }
         .animation(nil, value: editMode?.wrappedValue)
-        .animation(.easeOut(duration: 0.3), value: action.priority)
+        .animation(.easeInOut(duration: 0.5), value: action.priority)
+        .animation(.easeInOut(duration: 0.5), value: action.isFlagged)
         .offset(x: 6)
     }
     

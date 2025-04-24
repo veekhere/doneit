@@ -18,7 +18,7 @@ struct AppearancePicker: View {
                     .tag(option)
             }
         } label: {
-            Text("Preferred Appearance")
+            Label("Color Scheme", systemImage: "circle.lefthalf.filled")
         }
     }
 }

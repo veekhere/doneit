@@ -8,12 +8,42 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State
+    private var actionsActive = false
+    
+    @State
+    private var settingsActive = false
+    
+    @StateObject
+    private var shortcutsManager = ShortcutsManager.instance
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 NavigationLink("Actions", destination: ActionsView())
                 NavigationLink("Settings", destination: SettingsView())
             }
+            .navigationDestination(isPresented: $actionsActive) {
+                ActionsView()
+            }
+            .navigationDestination(isPresented: $settingsActive) {
+                SettingsView()
+            }
+            .onAppear {
+                performShortcut()
+            }
+            .onChange(of: shortcutsManager.shortcut) {
+                performShortcut()
+            }
+        }
+    }
+    
+    private func performShortcut() {
+        switch shortcutsManager.shortcut {
+            case .newAction:
+                actionsActive = true
+            default:
+                return
         }
     }
 }

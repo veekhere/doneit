@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct ActionList: View {
+struct Actions: View {
     @Environment(\.modelContext)
     private var context
     
@@ -131,5 +131,5 @@ struct ActionList: View {
 }
 
 #Preview {
-    ActionList([SortDescriptor(\ActionModel.isDone)], selection: Set<String>())
+    Actions([SortDescriptor(\ActionModel.isDone)], selection: Set<String>())
 }

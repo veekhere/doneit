@@ -20,7 +20,7 @@ struct DoneitApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [ActionModel.self])
+        .modelContainer(for: [ActionListModel.self, ActionModel.self])
         .onChange(of: scenePhase) {
             if scenePhase == .background {
                 setupShortcuts()

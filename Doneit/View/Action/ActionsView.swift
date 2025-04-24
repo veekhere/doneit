@@ -36,9 +36,10 @@ struct ActionsView: View {
 
     var body: some View {
         VStack {
-            ActionList(sort, selection: selection)
+            Actions(sort, selection: selection)
                 .environment(\.editMode, $editMode.animation())
                 .navigationTitle("Actions")
+                .navigationBarTitleDisplayMode(.large)
                 .toolbar {
                     if !actions.isEmpty {
                         editButton()
