@@ -9,8 +9,23 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @AppStorage("appearance")
+    private var appearance: Appearance = .system
+    
+    private var colorScheme: ColorScheme? {
+        switch appearance {
+            case .light:
+                return .light
+            case .dark:
+                return .dark
+            default:
+                return nil
+        }
+    }
+
     var body: some View {
-        ActionsView()
+        HomeView()
+            .preferredColorScheme(colorScheme)
     }
 }
 

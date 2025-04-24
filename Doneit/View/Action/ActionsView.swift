@@ -35,7 +35,7 @@ struct ActionsView: View {
     }
 
     var body: some View {
-        NavigationView {
+        VStack {
             ActionList(sort, selection: selection)
                 .environment(\.editMode, $editMode.animation())
                 .navigationTitle("Actions")
