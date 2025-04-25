@@ -9,6 +9,15 @@ import SwiftUI
 import SwiftData
 
 struct Actions: View {
+    @State
+    var selection: Set<String>
+    
+    @State
+    private var actionCreateSheetPresent = false
+    
+    @Query
+    private var actions: [ActionModel]
+    
     @Environment(\.modelContext)
     private var context
     
@@ -17,15 +26,6 @@ struct Actions: View {
     
     @StateObject
     private var shortcutsManager = ShortcutsManager.instance
-    
-    @Query
-    private var actions: [ActionModel]
-    
-    @State
-    var selection: Set<String>
-    
-    @State
-    private var actionCreateSheetPresent = false
     
     init(_ sort: [SortDescriptor<ActionModel>], selection: Set<String>) {
         self._actions = Query(sort: sort)

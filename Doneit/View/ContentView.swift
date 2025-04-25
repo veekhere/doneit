@@ -12,20 +12,13 @@ struct ContentView: View {
     @AppStorage("appearance")
     private var appearance: Appearance = .system
     
-    private var colorScheme: ColorScheme? {
-        switch appearance {
-            case .light:
-                return .light
-            case .dark:
-                return .dark
-            default:
-                return nil
-        }
-    }
+    @AppStorage("accentColor")
+    private var color: AccentColor = .defaultColor
 
     var body: some View {
         HomeView()
-            .preferredColorScheme(colorScheme)
+            .preferredColorScheme(appearance.scheme)
+            .accentColor(color.color)
     }
 }
 

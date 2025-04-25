@@ -9,14 +9,17 @@ import SwiftUI
 import SwiftData
 
 struct ActionEditSheet: View {
+    @State
+    var action: ActionModel
+    
     @Environment(\.dismiss)
     private var dismiss
 
     @Environment(\.modelContext)
     private var context
-
-    @State
-    var action: ActionModel
+    
+    @AppStorage("accentColor")
+    private var color: AccentColor = .defaultColor
     
     var body: some View {
         NavigationView {
@@ -49,6 +52,7 @@ struct ActionEditSheet: View {
                 }
             }
         }
+        .accentColor(color.color)
     }
 }
 

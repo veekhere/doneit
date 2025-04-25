@@ -11,6 +11,9 @@ struct AddActionButton: View {
     @Binding
     var actionCreateSheetPresent: Bool
     
+    @AppStorage("accentColor")
+    private var color: AccentColor = .defaultColor
+    
     var body: some View {
         Button {
             actionCreateSheetPresent = true
@@ -20,7 +23,7 @@ struct AddActionButton: View {
                 .bold()
         }
         .labelStyle(.iconOnly)
-        .buttonStyle(GrowingButton())
+        .buttonStyle(GrowingButton(color.color))
         .offset(x: -34, y: -2)
         .transition(AddButtonTransition())
     }
@@ -29,11 +32,17 @@ struct AddActionButton: View {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .padding(10)
-                .background(.accent)
                 .foregroundStyle(Color(UIColor.systemBackground))
+                .background(color)
                 .clipShape(Circle())
                 .scaleEffect(configuration.isPressed ? 2.5 : 1)
                 .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+        }
+        
+        private var color: Color = .accentColor
+        
+        init(_ color: Color) {
+            self.color = color
         }
     }
     

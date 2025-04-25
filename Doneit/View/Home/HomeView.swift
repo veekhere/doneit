@@ -21,8 +21,17 @@ struct HomeView: View {
         NavigationStack {
             List {
                 NavigationLink("Actions", destination: ActionsView())
-                NavigationLink("Settings", destination: SettingsView())
             }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        settingsActive = true
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                }
+            }
+            .navigationTitle("Lists")
             .navigationDestination(isPresented: $actionsActive) {
                 ActionsView()
             }

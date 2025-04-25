@@ -11,6 +11,7 @@ struct GeneralSection: View {
     var body: some View {
         Section("General") {
             AppearancePicker()
+            AccentColorPicker()
         }
     }
 }

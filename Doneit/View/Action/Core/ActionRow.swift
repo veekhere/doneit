@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct ActionRow: View {
-    @Environment(\.modelContext)
-    private var context
-    
-    @Environment(\.editMode)
-    private var editMode
-    
-    @State
-    private var actionEditSheetPresent = false
-
     @State
     var action: ActionModel
     
     @Binding
     var selection: Set<String>
+    
+    @State
+    private var actionEditSheetPresent = false
+    
+    @Environment(\.modelContext)
+    private var context
+    
+    @Environment(\.editMode)
+    private var editMode
 
     var body: some View {
         HStack {
@@ -106,7 +106,7 @@ struct ActionRow: View {
         VStack {
             if action.isFlagged {
                 Image(systemName: "flag")
-                    .foregroundColor(.accent)
+                    .foregroundColor(.orange)
                     .font(.caption)
                     .padding(2)
                     .transition(.blurReplace)
