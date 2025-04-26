@@ -76,7 +76,7 @@ struct ActionRow: View {
             }
         } label: {
             Image(action.isDone ? "circle.circle.2" : "circle")
-                .animation(nil)
+                .animation(nil, value: action.isDone)
                 .foregroundColor(.accentColor)
                 .font(.system(size: 19))
         }
@@ -120,9 +120,9 @@ struct ActionRow: View {
                     .transition(.blurReplace)
             }
         }
-        .animation(nil, value: editMode?.wrappedValue)
-        .animation(.easeInOut(duration: 0.5), value: action.priority)
-        .animation(.easeInOut(duration: 0.5), value: action.isFlagged)
+        .animation(nil, value: editMode?.wrappedValue.isEditing)
+        .animation(.easeInOut(duration: 0.2), value: action.priority)
+        .animation(.easeInOut(duration: 0.2), value: action.isFlagged)
         .offset(x: 6)
     }
     
