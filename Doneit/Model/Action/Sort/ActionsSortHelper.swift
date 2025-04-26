@@ -28,6 +28,29 @@ class ActionsSortHelper {
                 ),
             ]
         ),
+        .priority: .init(
+            title: "Priority",
+            variants: [
+                .init(
+                    id: .forward,
+                    title: "Highest First",
+                    descriptors: [
+                        SortDescriptor(\ActionModel.isDone),
+                        SortDescriptor(\ActionModel.isFlagged, order: .reverse),
+                        SortDescriptor(\ActionModel.priority, order: .forward)
+                    ]
+                ),
+                .init(
+                    id: .reverse,
+                    title: "Lowest First",
+                    descriptors: [
+                        SortDescriptor(\ActionModel.isDone),
+                        SortDescriptor(\ActionModel.isFlagged, order: .forward),
+                        SortDescriptor(\ActionModel.priority, order: .reverse)
+                    ]
+                ),
+            ]
+        ),
         .createdAt: .init(
             title: "Creation Date",
             variants: [

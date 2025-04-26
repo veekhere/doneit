@@ -30,8 +30,8 @@ struct ActionsView: View {
     
     private var sort: [SortDescriptor<ActionModel>] {
         return sortKey == .defaultSort
-            ? selectedSortEntry.sort
-            : selectedSortEntry.variants.first { $0.id == order }!.descriptors
+        ? selectedSortEntry.sort
+        : selectedSortEntry.variants.first { $0.id == order }!.descriptors
     }
 
     var body: some View {

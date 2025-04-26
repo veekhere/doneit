@@ -7,13 +7,53 @@
 
 import SwiftUICore
 
-enum Priority: String, CaseIterable, Codable, Identifiable {
-    var id: String { rawValue }
+enum Priority: CaseIterable, Codable {
+    case none
+    case low
+    case medium
+    case high
+    
+    init(_ index: Int) {
+        switch index {
+            case 1:
+                self = .high
+            case 2:
+                self = .medium
+            case 3:
+                self = .low
 
-    case none = "none"
-    case low = "low"
-    case medium = "medium"
-    case high = "high"
+            default:
+                self = .none
+        }
+    }
+    
+    var index: Int {
+        switch self {
+            case .low:
+                return 3
+            case .medium:
+                return 2
+            case .high:
+                return 1
+
+            case .none:
+                return 4
+        }
+    }
+    
+    var title: String {
+        switch self {
+            case .low:
+                return "Low"
+            case .medium:
+                return "Medium"
+            case .high:
+                return "High"
+                
+            case .none:
+                return ""
+        }
+    }
     
     var color: Color {
         switch self {
@@ -40,20 +80,6 @@ enum Priority: String, CaseIterable, Codable, Identifiable {
 
             case .none:
                 return nil
-        }
-    }
-    
-    var index: Int {
-        switch self {
-            case .low:
-                return 1
-            case .medium:
-                return 2
-            case .high:
-                return 3
-
-            case .none:
-                return 0
         }
     }
 }

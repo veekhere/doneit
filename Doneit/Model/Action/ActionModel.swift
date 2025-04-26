@@ -18,7 +18,7 @@ class ActionModel: Identifiable {
     var actionDescription: String = ""
     var isDone: Bool = false
     var isFlagged: Bool = false
-    var priority: Priority = Priority.none
+    var priority: Int = Priority.none.index
     var createdAt: Date = Date.now
     var editedAt: Date = Date.distantPast
     
@@ -41,7 +41,7 @@ class ActionModel: Identifiable {
     ) {
         self.title = title
         self.isFlagged = isFlagged
-        self.priority = priority
+        self.priority = priority.index
     }
     
     func toggleStatus() {

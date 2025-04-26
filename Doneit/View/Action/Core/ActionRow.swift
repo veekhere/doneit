@@ -23,6 +23,10 @@ struct ActionRow: View {
     @Environment(\.editMode)
     private var editMode
 
+    private var priority: Priority {
+        Priority(action.priority)
+    }
+
     var body: some View {
         HStack {
             if !editMode!.wrappedValue.isEditing {
@@ -112,9 +116,9 @@ struct ActionRow: View {
                     .transition(.blurReplace)
             }
             
-            if action.priority.icon != nil {
-                Image(systemName: action.priority.icon!)
-                    .foregroundColor(action.priority.color)
+            if priority.icon != nil {
+                Image(systemName: priority.icon!)
+                    .foregroundColor(priority.color)
                     .font(.caption)
                     .padding(2)
                     .transition(.blurReplace)
@@ -178,12 +182,12 @@ struct ActionRow: View {
     
     private func priorityPicker() -> some View {
         Picker(selection: $action.priority.animation()) {
-            ForEach(Priority.allCases) {
+            ForEach(Priority.allCases, id: \.index) {
                 if $0.icon?.isEmpty != nil {
-                    Label($0.rawValue.capitalized, systemImage: $0.icon!)
+                    Label($0.title, systemImage: $0.icon!)
                         .tag($0)
                 } else {
-                    Text($0.rawValue.capitalized)
+                    Text($0.title)
                         .tag($0)
                 }
             }
