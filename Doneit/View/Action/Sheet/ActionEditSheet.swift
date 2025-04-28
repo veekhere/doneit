@@ -29,14 +29,15 @@ struct ActionEditSheet: View {
                         Text("Title")
                     }
                     
-                    TextField(text: $action.actionDescription) {
+                    TextField(text: $action.actionDescription, axis: .vertical) {
                         Text("Description")
                     }
+                    .lineLimit(1...10)
+                    .multilineTextAlignment(.leading)
                 }
             }
             .navigationTitle("Edit Action")
             .navigationBarTitleDisplayMode(.inline)
-
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button("Cancel") {

@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct ActionCreateSheet: View {
+    var listType: ActionListType
+
     @State
     private var action = ActionModel()
     
@@ -29,9 +31,11 @@ struct ActionCreateSheet: View {
                         Text("Title")
                     }
 
-                    TextField(text: $action.actionDescription) {
+                    TextField(text: $action.actionDescription, axis: .vertical) {
                         Text("Description")
                     }
+                    .lineLimit(1...10)
+                    .multilineTextAlignment(.leading)
                 }
             }
             .navigationTitle("New Action")
@@ -50,6 +54,7 @@ struct ActionCreateSheet: View {
 
                         action.title = title.isEmpty ? "Untitled" : title
                         action.actionDescription = description
+                        action.isFlagged = listType == .flagged
 
                         context.insert(action)
                         
@@ -69,5 +74,5 @@ struct ActionCreateSheet: View {
 }
 
 #Preview {
-    ActionCreateSheet()
+    ActionCreateSheet(listType: .all)
 }

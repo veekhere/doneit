@@ -9,21 +9,23 @@ import SwiftUI
 import SwiftData
 
 struct ActionsView: View {
-    @Query
-    private var actions: [ActionModel]
+    var listType: ActionListType
     
     @State
     private var editMode: EditMode = .inactive
     
     @State
     private var selection = Set<String>()
-    
+
+    @Query
+    private var actions: [ActionModel]
+
     @State
     private var sortKey: ActionsSortKey = .defaultSort
-    
+
     @State
     private var order: SortOrder = .forward
-    
+
     private var selectedSortEntry: ActionsSortEntry {
         ActionsSortHelper.getEntry(sortKey)
     }
@@ -36,10 +38,10 @@ struct ActionsView: View {
 
     var body: some View {
         VStack {
-            Actions(sort, selection: selection)
+            Actions(sort, selection: selection, listType: listType)
                 .environment(\.editMode, $editMode.animation())
-                .navigationTitle("Actions")
-                .navigationBarTitleDisplayMode(.large)
+                .navigationTitle("\(listType.rawValue.capitalized) Actions")
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     if !actions.isEmpty {
                         editButton()
@@ -106,5 +108,5 @@ struct ActionsView: View {
 }
 
 #Preview {
-    ActionsView()
+    ActionsView(listType: .all)
 }

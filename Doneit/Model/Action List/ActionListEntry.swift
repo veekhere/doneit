@@ -7,27 +7,26 @@
 
 import Foundation
 import SwiftData
+import SwiftUICore
 
 @Model
-class ActionListModel: Identifiable {
+class ActionListEntry: Identifiable {
     @Attribute(.unique)
     var id = UUID().uuidString
     
-    @Relationship(deleteRule: .cascade)
-    var actions = [ActionModel]()
-    
     var title: String
     var icon: String
+    var color: AccentColor
     var createdAt: Date = Date.now
     var editedAt: Date = Date.distantPast
     
     init(
         title: String,
         icon: String = "list.bullet",
-        actions: [ActionModel] = [ActionModel]()
+        color: AccentColor = .defaultColor
     ) {
         self.title = title
         self.icon = icon
-        self.actions = actions
+        self.color = color
     }
 }

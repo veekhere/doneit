@@ -26,6 +26,13 @@ class ActionModel: Identifiable {
     
     init() {}
     
+    init(from: ActionModel) {
+        self.title = from.title
+        self.actionDescription = from.actionDescription
+        self.isFlagged = from.isFlagged
+        self.priority = from.priority
+    }
+    
     init(
         title: String,
         description: String? = nil

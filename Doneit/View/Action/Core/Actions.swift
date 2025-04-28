@@ -9,27 +9,30 @@ import SwiftUI
 import SwiftData
 
 struct Actions: View {
+    var listType: ActionListType
+
     @State
     var selection: Set<String>
-    
+
     @State
     private var actionCreateSheetPresent = false
-    
-    @Query
-    private var actions: [ActionModel]
-    
+
     @Environment(\.modelContext)
     private var context
     
+    @Query
+    private var actions: [ActionModel]
+
     @Environment(\.editMode)
     private var editMode
-    
+
     @StateObject
     private var shortcutsManager = ShortcutsManager.instance
-    
-    init(_ sort: [SortDescriptor<ActionModel>], selection: Set<String>) {
-        self._actions = Query(sort: sort)
+
+    init(_ sort: [SortDescriptor<ActionModel>], selection: Set<String>, listType: ActionListType) {
+        self._actions = Query(filter: listType.filter, sort: sort)
         self.selection = selection
+        self.listType = listType
     }
     
     var body: some View {
@@ -48,11 +51,12 @@ struct Actions: View {
                 }
             }
             .sheet(isPresented: $actionCreateSheetPresent) {
-                ActionCreateSheet()
+                ActionCreateSheet(listType: listType)
+                    .presentationDetents([.medium])
             }
         }
         .overlay(alignment: .bottomTrailing) {
-            if !editMode!.wrappedValue.isEditing && !actions.isEmpty {
+            if !editMode!.wrappedValue.isEditing && listType != .completed {
                 AddActionButton(actionCreateSheetPresent: $actionCreateSheetPresent)
             }
         }
@@ -73,12 +77,8 @@ struct Actions: View {
         ContentUnavailableView {
             Label("No Actions", systemImage: "list.bullet.rectangle.portrait")
         } description: {
-            Text("Start adding actions to see them here")
-        } actions: {
-            Button {
-                actionCreateSheetPresent = true
-            } label: {
-                Text("Create new action")
+            if listType != .completed {
+                Text("Start adding actions to see them here")
             }
         }
         .offset(y: -60)
@@ -131,5 +131,5 @@ struct Actions: View {
 }
 
 #Preview {
-    Actions([SortDescriptor(\ActionModel.isDone)], selection: Set<String>())
+    Actions([SortDescriptor(\ActionModel.isDone)], selection: Set<String>(), listType: .all)
 }

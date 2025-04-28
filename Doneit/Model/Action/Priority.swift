@@ -51,7 +51,7 @@ enum Priority: CaseIterable, Codable {
                 return "High"
                 
             case .none:
-                return ""
+                return "None"
         }
     }
     

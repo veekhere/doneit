@@ -7,7 +7,7 @@
 
 import SwiftUICore
 
-enum AccentColor: String, CaseIterable, Identifiable {
+enum AccentColor: String, CaseIterable, Codable, Identifiable {
     var id: String { rawValue }
     
     case defaultColor

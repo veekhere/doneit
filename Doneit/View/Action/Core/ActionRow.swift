@@ -44,6 +44,7 @@ struct ActionRow: View {
         .contentShape(Rectangle())
         .sheet(isPresented: $actionEditSheetPresent) {
             ActionEditSheet(action: action)
+                .presentationDetents([.medium])
         }
         .onTapGesture {
             if editMode!.wrappedValue.isEditing { return }
@@ -167,8 +168,8 @@ struct ActionRow: View {
     
     private func duplicateAction() -> some View {
         Button() {
-            let newAction = ActionModel(title: action.title, description: action.actionDescription)
-            context.insert(newAction)
+            let copy = ActionModel(from: action)
+            context.insert(copy)
             
             do {
                 try context.save()
