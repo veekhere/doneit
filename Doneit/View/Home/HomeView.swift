@@ -11,40 +11,34 @@ import SwiftData
 struct HomeView: View {
     @State
     private var allActionsActive = false
-    
+
     @State
     private var flaggedActionsActive = false
-    
+
     @State
     private var settingsActive = false
-    
+
     @StateObject
     private var shortcutsManager = ShortcutsManager.instance
-    
-    @State
-    private var editMode: EditMode = .inactive
-    
+
     let colums = [GridItem(.adaptive(minimum: 150))]
-    
+
     var body: some View {
         NavigationStack {
             List {
-                if !editMode.isEditing {
-                    Section {
-                        VStack {
-                            LazyVGrid(columns: colums, spacing: 10) {
-                                ForEach(ActionListType.allCases, id: \.self) { listType in
-                                    ActionListView(list: ActionListHelper.getEntry(listType), type: listType)
-                                }
+                Section {
+                    VStack {
+                        LazyVGrid(columns: colums, spacing: 10) {
+                            ForEach(ActionListType.allCases, id: \.self) { listType in
+                                ActionListView(list: ActionListHelper.getEntry(listType), type: listType)
                             }
                         }
                     }
-                    .listRowBackground(Color(UIColor.systemGroupedBackground))
-                    .listRowInsets(EdgeInsets())
                 }
+                .listRowBackground(Color(UIColor.systemGroupedBackground))
+                .listRowInsets(EdgeInsets())
             }
             .listStyle(.sidebar)
-            .environment(\.editMode, $editMode)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -52,7 +46,6 @@ struct HomeView: View {
                     } label: {
                         Image(systemName: "gear")
                     }
-                    .disabled(editMode.isEditing)
                 }
             }
             .navigationDestination(isPresented: $allActionsActive) {
