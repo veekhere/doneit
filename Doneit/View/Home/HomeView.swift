@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
     @State
-    private var actionsActive = false
+    private var allActionsActive = false
+    
+    @State
+    private var flaggedActionsActive = false
     
     @State
     private var settingsActive = false
@@ -19,9 +23,6 @@ struct HomeView: View {
     
     @State
     private var editMode: EditMode = .inactive
-    
-    @State
-    private var createdListsExpanded = true
     
     let colums = [GridItem(.adaptive(minimum: 150))]
     
@@ -33,7 +34,7 @@ struct HomeView: View {
                         VStack {
                             LazyVGrid(columns: colums, spacing: 10) {
                                 ForEach(ActionListType.allCases, id: \.self) { listType in
-                                    ActionList(list: ActionListHelper.getEntry(listType), type: listType)
+                                    ActionListView(list: ActionListHelper.getEntry(listType), type: listType)
                                 }
                             }
                         }
@@ -41,17 +42,6 @@ struct HomeView: View {
                     .listRowBackground(Color(UIColor.systemGroupedBackground))
                     .listRowInsets(EdgeInsets())
                 }
-                
-                Section(isExpanded: $createdListsExpanded) {
-                    // list items
-                } header: {
-                    Text("Created by You")
-                        .textCase(.none)
-                        .font(.system(.title2, design: .rounded, weight: .bold))
-                        .foregroundColor(.primary)
-                        .padding(.leading, -20)
-                }
-                .animation(nil, value: createdListsExpanded)
             }
             .listStyle(.sidebar)
             .environment(\.editMode, $editMode)
@@ -64,37 +54,12 @@ struct HomeView: View {
                     }
                     .disabled(editMode.isEditing)
                 }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    if editMode.isEditing {
-                        Button("Done") {
-                            withAnimation {
-                                editMode = .inactive
-                            }
-                        }
-                    } else {
-                        Menu {
-                            Button {
-                                
-                            } label: {
-                                Label("Add List", systemImage: "plus")
-                            }
-                            
-                            Button {
-                                withAnimation {
-                                    editMode = .active
-                                }
-                            } label: {
-                                Label("Edit Lists", systemImage: "pencil")
-                            }
-                        } label: {
-                            Image(systemName: "ellipsis.circle")
-                        }
-                    }
-                }
             }
-            .navigationDestination(isPresented: $actionsActive) {
-//                ActionsView()
+            .navigationDestination(isPresented: $allActionsActive) {
+                ActionsView(listType: .all)
+            }
+            .navigationDestination(isPresented: $flaggedActionsActive) {
+                ActionsView(listType: .flagged)
             }
             .navigationDestination(isPresented: $settingsActive) {
                 SettingsView()
@@ -111,7 +76,9 @@ struct HomeView: View {
     private func performShortcut() {
         switch shortcutsManager.shortcut {
             case .newAction:
-                actionsActive = true
+                allActionsActive = true
+            case .newFlaggedAction:
+                flaggedActionsActive = true
             default:
                 return
         }

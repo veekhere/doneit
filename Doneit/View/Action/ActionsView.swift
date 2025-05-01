@@ -38,7 +38,7 @@ struct ActionsView: View {
 
     var body: some View {
         VStack {
-            Actions(sort, selection: selection, listType: listType)
+            ActionList(sort, selection: selection, listType: listType)
                 .environment(\.editMode, $editMode.animation())
                 .navigationTitle("\(listType.rawValue.capitalized) Actions")
                 .navigationBarTitleDisplayMode(.inline)

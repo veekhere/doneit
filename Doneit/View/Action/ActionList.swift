@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct Actions: View {
+struct ActionList: View {
     var listType: ActionListType
 
     @State
@@ -121,7 +121,7 @@ struct Actions: View {
     
     private func performShortcut() {
         switch shortcutsManager.shortcut {
-            case .newAction:
+            case .newAction, .newFlaggedAction:
                 actionCreateSheetPresent = true
                 shortcutsManager.shortcut = nil
             default:
@@ -131,5 +131,5 @@ struct Actions: View {
 }
 
 #Preview {
-    Actions([SortDescriptor(\ActionModel.isDone)], selection: Set<String>(), listType: .all)
+    ActionList([SortDescriptor(\ActionModel.isDone)], selection: Set<String>(), listType: .all)
 }

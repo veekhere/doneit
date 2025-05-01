@@ -9,4 +9,5 @@ import Foundation
 
 enum Shortcut: String, Hashable {
     case newAction = "newAction"
+    case newFlaggedAction = "newFlaggedAction"
 }

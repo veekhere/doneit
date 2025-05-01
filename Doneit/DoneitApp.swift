@@ -20,7 +20,7 @@ struct DoneitApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [ActionModel.self])
+        .modelContainer(for: [ActionListEntry.self, ActionModel.self])
         .onChange(of: scenePhase) {
             if scenePhase == .background {
                 setupShortcuts()
@@ -36,6 +36,15 @@ struct DoneitApp: App {
             icon: UIApplicationShortcutIcon(systemImageName: "plus"),
             userInfo: [:]
         )
-        UIApplication.shared.shortcutItems = [addNewAction]
+
+        let addNewFlaggedAction = UIApplicationShortcutItem(
+            type: Shortcut.newFlaggedAction.rawValue,
+            localizedTitle: "New Flagged Action",
+            localizedSubtitle: nil,
+            icon: UIApplicationShortcutIcon(systemImageName: "flag"),
+            userInfo: [:]
+        )
+
+        UIApplication.shared.shortcutItems = [addNewAction, addNewFlaggedAction]
     }
 }

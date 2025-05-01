@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct ActionList: View {
+struct ActionListView: View {
     @Bindable
     var list: ActionListEntry
 
@@ -72,5 +72,5 @@ struct ActionList: View {
 }
 
 #Preview {
-    ActionList(list: .init(title: "Preview"), type: .all)
+    ActionListView(list: .init(title: "Preview"), type: .all)
 }
